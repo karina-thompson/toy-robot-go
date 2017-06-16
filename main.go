@@ -1,14 +1,14 @@
 package main
 
-import (
-	"github.com/karina-thompson/toy-robot-go/compass"
-	"github.com/karina-thompson/toy-robot-go/robot"
-)
+import "github.com/karina-thompson/toy-robot-go/robot"
 
 func main() {
 	robot := robot.ToyRobot{}
-	robot, _ = robot.Place(2, 2, "NORTH")
-	robot.Direction = compass.Turn(robot.Direction, "LEFT")
+	robot, _ = robot.Place(1, 2, "EAST")
+	robot, _ = robot.Move()
+	robot, _ = robot.Move()
+	robot, _ = robot.Turn("LEFT")
+	robot, _ = robot.Move()
 	robot.Report()
 
 	// var command string

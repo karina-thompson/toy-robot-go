@@ -25,6 +25,7 @@ func Turn(facing, direction string) string {
 				result = compass.Prev()
 			}
 		}
+		compass = compass.Next()
 	}
 	return (result.Value).(string)
 }

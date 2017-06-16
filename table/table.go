@@ -1,7 +1,9 @@
 package table
 
+const tableSize = 5
+
 func InvalidPosition(xPos, yPos int) bool {
-	return xPos > 5 || xPos < 0 || yPos > 5 || yPos < 0
+	return xPos > tableSize || xPos < 0 || yPos > tableSize || yPos < 0
 }
 
 func Move(xPos, yPos int, facing string) (int, int) {
