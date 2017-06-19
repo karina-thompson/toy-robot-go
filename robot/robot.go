@@ -30,8 +30,9 @@ func (r *ToyRobot) Move() (*ToyRobot, error) {
 	if !r.onTable {
 		return r, errors.New("Robot not on table, could not be moved")
 	}
-	r.xPos, r.yPos = table.Move(r.xPos, r.yPos, r.facing)
-	return r, nil
+	var err error
+	r.xPos, r.yPos, err = table.Move(r.xPos, r.yPos, r.facing)
+	return r, err
 }
 
 func (r *ToyRobot) Turn(direction string) (*ToyRobot, error) {

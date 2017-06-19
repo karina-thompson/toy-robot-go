@@ -1,15 +1,18 @@
 package main
 
-import "github.com/karina-thompson/toy-robot-go/robot"
+import (
+	"fmt"
+
+	"github.com/karina-thompson/toy-robot-go/robot"
+)
 
 func main() {
-	robot := robot.ToyRobot{}
-	robot.Place(0, 0, "NORTH")
-	robot.Move()
-	robot.Move()
-	robot.Turn("LEFT")
-	robot.Move()
-	robot.Report()
+	r := robot.ToyRobot{}
+	_, err := r.Move()
+	fmt.Println(err)
+	r.Place(0, 0, "NORTH")
+	r.Move()
+	r.Report()
 
 	// var command string
 	// fmt.Println("Toy Robot - please enter a command:")
