@@ -4,11 +4,11 @@ import "github.com/karina-thompson/toy-robot-go/robot"
 
 func main() {
 	robot := robot.ToyRobot{}
-	robot, _ = robot.Place(1, 2, "EAST")
-	robot, _ = robot.Move()
-	robot, _ = robot.Move()
-	robot, _ = robot.Turn("LEFT")
-	robot, _ = robot.Move()
+	robot.Place(0, 0, "NORTH")
+	robot.Move()
+	robot.Move()
+	robot.Turn("LEFT")
+	robot.Move()
 	robot.Report()
 
 	// var command string

@@ -14,7 +14,7 @@ type ToyRobot struct {
 	onTable    bool
 }
 
-func (r ToyRobot) Place(xPos, yPos int, direction string) (ToyRobot, error) {
+func (r *ToyRobot) Place(xPos, yPos int, direction string) (*ToyRobot, error) {
 	if table.InvalidPosition(xPos, yPos) {
 		return r, errors.New("Invalid position, robot could not be placed")
 	}
@@ -26,7 +26,7 @@ func (r ToyRobot) Report() {
 	fmt.Println(r.xPos, r.yPos, r.facing)
 }
 
-func (r ToyRobot) Move() (ToyRobot, error) {
+func (r *ToyRobot) Move() (*ToyRobot, error) {
 	if !r.onTable {
 		return r, errors.New("Robot not on table, could not be moved")
 	}
@@ -34,7 +34,7 @@ func (r ToyRobot) Move() (ToyRobot, error) {
 	return r, nil
 }
 
-func (r ToyRobot) Turn(direction string) (ToyRobot, error) {
+func (r *ToyRobot) Turn(direction string) (*ToyRobot, error) {
 	if !r.onTable {
 		return r, errors.New("Robot not on table, could not be turned")
 	}
