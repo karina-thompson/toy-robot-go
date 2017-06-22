@@ -4,9 +4,7 @@ import "testing"
 
 func TestTurn(t *testing.T) {
 	turnTests := []struct {
-		facing    string
-		direction string
-		result    string
+		facing, direction, result string
 	}{
 		{"NORTH", "LEFT", "WEST"},
 		{"WEST", "RIGHT", "NORTH"},
