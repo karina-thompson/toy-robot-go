@@ -10,7 +10,7 @@ func TestTurn(t *testing.T) {
 		{"WEST", "RIGHT", "NORTH"},
 		{"SOUTH", "LEFT", "EAST"},
 		{"EAST", "RIGHT", "SOUTH"},
-		{"da", "do", ""},
+		{"up", "down", ""},
 	}
 	for _, test := range turnTests {
 		result := Turn(test.facing, test.direction)

@@ -23,6 +23,10 @@ func (r *ToyRobot) Place(xPos, yPos int, direction string) (*ToyRobot, error) {
 }
 
 func (r ToyRobot) Report() {
+	if !r.onTable {
+		fmt.Println("Robot is not currently on table")
+		return
+	}
 	fmt.Println(r.xPos, r.yPos, r.facing)
 }
 
