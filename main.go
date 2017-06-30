@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -10,32 +11,44 @@ import (
 
 func main() {
 	fmt.Println("Toy Robot - please enter a command:")
-	var exit bool
+	acceptCommands := true
 	r := robot.ToyRobot{}
 
-	for !exit {
+	for acceptCommands {
 		var command, parameters string
 		var err error
 		fmt.Scanln(&command, &parameters)
 
-		switch command {
-		case "PLACE":
+		switch strings.ToLower(command) {
+		case "place":
+			if len(parameters) == 0 {
+				err = errors.New("The PLACE command requires a position, please try again")
+				break
+			}
 			position := strings.Split(parameters, ",")
-			xPos, _ := strconv.Atoi(position[0])
-			yPos, _ := strconv.Atoi(position[1])
-			_, err = r.Place(xPos, yPos, position[2])
-		case "REPORT":
-			r.Report()
-		case "LEFT":
-			_, err = r.Turn("LEFT")
-		case "RIGHT":
-			_, err = r.Turn("RIGHT")
-		case "MOVE":
-			_, err = r.Move()
-		case "EXIT":
-			exit = true
+			if len(position) != 3 {
+				err = errors.New("Invalid position, robot could not be placed")
+				break
+			}
+			xPos, errX := strconv.Atoi(position[0])
+			yPos, errY := strconv.Atoi(position[1])
+			if errX != nil || errY != nil {
+				err = errors.New("Invalid position, robot could not be placed")
+				break
+			}
+			err = r.Place(xPos, yPos, position[2])
+		case "report":
+			err = r.Report()
+		case "left":
+			err = r.Turn("left")
+		case "right":
+			err = r.Turn("right")
+		case "move":
+			err = r.Move()
+		case "exit":
+			acceptCommands = false
 		default:
-			fmt.Println("Invalid command,please try again")
+			err = errors.New("Invalid command, please try again")
 		}
 		if err != nil {
 			fmt.Println(err)

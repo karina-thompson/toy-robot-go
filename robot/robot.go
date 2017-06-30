@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/karina-thompson/toy-robot-go/compass"
-	"github.com/karina-thompson/toy-robot-go/table"
+	"github.com/karina-thompson/toy-robot-go/position"
 )
 
 type ToyRobot struct {
@@ -14,35 +14,35 @@ type ToyRobot struct {
 	onTable    bool
 }
 
-func (r *ToyRobot) Place(xPos, yPos int, direction string) (*ToyRobot, error) {
-	if table.InvalidPosition(xPos, yPos) {
-		return r, errors.New("Invalid position, robot could not be placed")
+func (r *ToyRobot) Place(xPos, yPos int, direction string) error {
+	if position.Invalid(xPos, yPos) {
+		return errors.New("Invalid position, robot could not be placed")
 	}
 	r.xPos, r.yPos, r.facing, r.onTable = xPos, yPos, direction, true
-	return r, nil
+	return nil
 }
 
-func (r ToyRobot) Report() {
+func (r ToyRobot) Report() error {
 	if !r.onTable {
-		fmt.Println("Robot is not currently on table")
-		return
+		return errors.New("Robot is not currently on table")
 	}
 	fmt.Println(r.xPos, r.yPos, r.facing)
+	return nil
 }
 
-func (r *ToyRobot) Move() (*ToyRobot, error) {
+func (r *ToyRobot) Move() error {
 	if !r.onTable {
-		return r, errors.New("Robot not on table, could not be moved")
+		return errors.New("Robot not on table, could not be moved")
 	}
-	var err error
-	r.xPos, r.yPos, err = table.Move(r.xPos, r.yPos, r.facing)
-	return r, err
+	xPos, yPos, err := position.Move(r.xPos, r.yPos, r.facing)
+	r.xPos, r.yPos = xPos, yPos
+	return err
 }
 
-func (r *ToyRobot) Turn(direction string) (*ToyRobot, error) {
+func (r *ToyRobot) Turn(direction string) error {
 	if !r.onTable {
-		return r, errors.New("Robot not on table, could not be turned")
+		return errors.New("Robot not on table, could not be turned")
 	}
 	r.facing = compass.Turn(r.facing, direction)
-	return r, nil
+	return nil
 }

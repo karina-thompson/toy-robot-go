@@ -2,7 +2,16 @@ package compass
 
 import "container/ring"
 
-var directions = []string{"NORTH", "EAST", "SOUTH", "WEST"}
+var directions = []string{"north", "east", "south", "west"}
+
+func InvalidDirection(direction string) bool {
+	for _, d := range directions {
+		if direction == d {
+			return true
+		}
+	}
+	return false
+}
 
 func compass() (compass *ring.Ring) {
 	compass = ring.New(len(directions))
@@ -19,17 +28,14 @@ func Turn(facing, direction string) string {
 
 	for i := 0; i < compass.Len(); i++ {
 		if compass.Value == facing {
-			if direction == "RIGHT" {
+			if direction == "right" {
 				result = compass.Next()
 			}
-			if direction == "LEFT" {
+			if direction == "left" {
 				result = compass.Prev()
 			}
 		}
 		compass = compass.Next()
 	}
-	if result != nil {
-		return (result.Value).(string)
-	}
-	return ""
+	return (result.Value).(string)
 }

@@ -6,11 +6,10 @@ func TestTurn(t *testing.T) {
 	turnTests := []struct {
 		facing, direction, result string
 	}{
-		{"NORTH", "LEFT", "WEST"},
-		{"WEST", "RIGHT", "NORTH"},
-		{"SOUTH", "LEFT", "EAST"},
-		{"EAST", "RIGHT", "SOUTH"},
-		{"up", "down", ""},
+		{"north", "left", "west"},
+		{"west", "right", "north"},
+		{"south", "left", "east"},
+		{"east", "right", "south"},
 	}
 	for _, test := range turnTests {
 		result := Turn(test.facing, test.direction)
