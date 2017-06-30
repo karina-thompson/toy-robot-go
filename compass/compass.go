@@ -7,10 +7,10 @@ var directions = []string{"north", "east", "south", "west"}
 func InvalidDirection(direction string) bool {
 	for _, d := range directions {
 		if direction == d {
-			return true
+			return false
 		}
 	}
-	return false
+	return true
 }
 
 func compass() (compass *ring.Ring) {
