@@ -1,4 +1,4 @@
-package compass
+package simulator
 
 import "testing"
 
@@ -12,7 +12,7 @@ func TestTurn(t *testing.T) {
 		{"east", "right", "south"},
 	}
 	for _, test := range turnTests {
-		result := Turn(test.facing, test.direction)
+		result := turn(test.facing, test.direction)
 		if result != test.result {
 			t.Errorf("Turn %v from %v was incorrect, got: %v, want: %v ",
 				test.direction, test.facing, result, test.result)

@@ -1,4 +1,4 @@
-package position
+package simulator
 
 import "testing"
 
@@ -13,7 +13,7 @@ func TestInvalidPosition(t *testing.T) {
 		{2, 7, true},
 	}
 	for _, test := range positionTests {
-		result := InvalidPosition(test.xPos, test.yPos)
+		result := invalidPosition(test.xPos, test.yPos)
 		if result != test.result {
 			t.Errorf("Result for invalid position test for x: %v and y: %v was incorrect, got: %v, want: %v ",
 				test.xPos, test.yPos, result, test.result)
@@ -33,7 +33,7 @@ func TestMove(t *testing.T) {
 		{0, 0, "south", 0, 0},
 	}
 	for _, test := range moveTests {
-		x, y, _ := Move(test.xPos, test.yPos, test.facing)
+		x, y, _ := move(test.xPos, test.yPos, test.facing)
 		if x != test.x || y != test.y {
 			t.Errorf("Expected (%v, %v), got (%v, %v)", test.x, test.y, x, y)
 		}
