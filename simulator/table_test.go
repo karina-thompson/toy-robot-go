@@ -20,22 +20,3 @@ func TestInvalidPosition(t *testing.T) {
 		}
 	}
 }
-
-func TestMove(t *testing.T) {
-	moveTests := []struct {
-		xPos, yPos int
-		facing     string
-		x, y       int
-	}{
-		{0, 0, "north", 0, 1},
-		{4, 4, "east", 4, 4},
-		{1, 4, "west", 0, 4},
-		{0, 0, "south", 0, 0},
-	}
-	for _, test := range moveTests {
-		x, y, _ := move(test.xPos, test.yPos, test.facing)
-		if x != test.x || y != test.y {
-			t.Errorf("Expected (%v, %v), got (%v, %v)", test.x, test.y, x, y)
-		}
-	}
-}
