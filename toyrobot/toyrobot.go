@@ -17,7 +17,8 @@ const (
 	exit   = "exit"
 )
 
-func Run(r *simulator.Robot, inputFile string) {
+func Run(inputFile string) {
+	r := simulator.Robot{}
 	if inputFile == "" {
 		fmt.Println("Toy Robot - please enter a command:")
 		for {
@@ -25,7 +26,7 @@ func Run(r *simulator.Robot, inputFile string) {
 			if command == exit {
 				return
 			}
-			err := processCommand(r, command, parameters)
+			err := processCommand(&r, command, parameters)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -36,7 +37,7 @@ func Run(r *simulator.Robot, inputFile string) {
 		commands := strings.Split(string(data), "\n")
 		for _, c := range commands {
 			command, parameters := parseInput(c)
-			err = processCommand(r, command, parameters)
+			err = processCommand(&r, command, parameters)
 			if err != nil {
 				fmt.Println(err)
 			}
@@ -55,38 +56,33 @@ func parseInput(input string) (string, string) {
 }
 
 func processCommand(r *simulator.Robot, command, parameters string) error {
-	var err error
 	errInvalidCommand := errors.New("Invalid command, please try again")
 	command = strings.ToLower(command)
 	switch {
 	case invalidExtraInput(command, parameters):
-		err = errInvalidCommand
-		break
+		return errInvalidCommand
 	case validPlaceCommand(command, parameters):
 		position := strings.Split(parameters, ",")
 		xPos, errX := strconv.Atoi(position[0])
 		yPos, errY := strconv.Atoi(position[1])
 		if errX != nil || errY != nil {
-			err = simulator.ErrInvalidPosition
-			break
+			return simulator.ErrInvalidPosition
 		}
-		err = r.Place(xPos, yPos, strings.ToLower(position[2]))
+		return r.Place(xPos, yPos, strings.ToLower(position[2]))
 	case command == report:
-		err = r.Report()
+		return r.Report()
 	case command == simulator.Left || command == simulator.Right:
-		err = r.Turn(command)
+		return r.Turn(command)
 	case command == move:
-		err = r.Move()
+		return r.Move()
 	default:
-		err = errInvalidCommand
+		return errInvalidCommand
 	}
-	return err
 }
 
-func getCliCommand() (string, string) {
-	var command, parameters string
+func getCliCommand() (command, parameters string) {
 	fmt.Scanln(&command, &parameters)
-	return command, parameters
+	return
 }
 
 func invalidExtraInput(command, parameters string) bool {

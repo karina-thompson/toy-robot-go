@@ -43,13 +43,15 @@ func TestMove(t *testing.T) {
 		{4, 4, "east", 4, 4},
 		{1, 4, "west", 0, 4},
 		{0, 0, "south", 0, 0},
+		{1, 4, "up", 1, 4},
 	}
 	for _, testCase := range testData {
 		r := Robot{testCase.xPos, testCase.yPos, testCase.facing, true}
 		err := r.Move()
-		if err == nil {
-			assert.Equal(t, r.xPos, testCase.x)
-			assert.Equal(t, r.yPos, testCase.y)
+		assert.Equal(t, r.xPos, testCase.x)
+		assert.Equal(t, r.yPos, testCase.y)
+		if err != nil {
+			assert.Equal(t, err, errInvalidMove)
 		}
 	}
 }

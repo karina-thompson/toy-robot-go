@@ -34,7 +34,6 @@ func isValidDirection(direction string) bool {
 func turn(facing, direction string) string {
 	var result *ring.Ring
 	compass := compass()
-
 	for i := 0; i < compass.Len(); i++ {
 		if compass.Value == facing {
 			if direction == Right {
