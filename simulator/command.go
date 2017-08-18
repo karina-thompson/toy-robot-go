@@ -1,53 +1,21 @@
-package toyrobot
+package simulator
 
 import (
 	"errors"
 	"fmt"
-	"io/ioutil"
 	"strconv"
 	"strings"
-
-	"github.com/karina-thompson/toy-robot-go/simulator"
 )
 
 const (
 	place  = "place"
 	report = "report"
 	move   = "move"
-	exit   = "exit"
 )
 
-func Run(inputFile string) {
-	r := simulator.Robot{}
-	if inputFile == "" {
-		fmt.Println("Toy Robot - please enter a command:")
-		stop := false
-		for !stop {
-			command := getCliCommand()
-			if command == exit {
-				stop = true
-				return
-			}
-			if err := processCommand(&r, command); err != nil {
-				fmt.Println(err)
-			}
-		}
-	}
-	data, err := ioutil.ReadFile(inputFile)
-	if err != nil {
-		return
-	}
-	commands := strings.Split(string(data), "\n")
-	for _, c := range commands {
-		if err = processCommand(&r, c); err != nil {
-			fmt.Println(err)
-		}
-	}
-}
-
-func processCommand(r *simulator.Robot, command string) error {
+func ProcessCommand(r *Robot, command string) error {
 	errInvalidCommand := errors.New("Invalid command, please try again")
-	command = strings.ToLower(command)
+	command = strings.TrimSpace(strings.ToLower(command))
 	switch {
 	case validPlaceCommand(strings.Split(command, " ")):
 		xPos, yPos, direction, err := placeParameters(strings.Split(command, " "))
@@ -57,7 +25,7 @@ func processCommand(r *simulator.Robot, command string) error {
 		return r.Place(xPos, yPos, direction)
 	case command == report:
 		return r.Report()
-	case command == simulator.Left || command == simulator.Right:
+	case command == Left || command == Right:
 		return r.Turn(command)
 	case command == move:
 		return r.Move()
@@ -90,7 +58,7 @@ func placeParameters(command []string) (int, int, string, error) {
 	xPos, errX := strconv.Atoi(position[0])
 	yPos, errY := strconv.Atoi(position[1])
 	if errX != nil || errY != nil {
-		err = simulator.ErrInvalidPosition
+		err = errInvalidPosition
 	}
 	return xPos, yPos, position[2], err
 }

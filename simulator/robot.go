@@ -10,7 +10,7 @@ type Robot struct {
 
 func (r *Robot) Place(xPos, yPos int, direction string) error {
 	if invalidPosition(xPos, yPos) || !isValidDirection(direction) {
-		return ErrInvalidPosition
+		return errInvalidPosition
 	}
 	r.xPos, r.yPos, r.facing, r.onTable = xPos, yPos, direction, true
 	return nil
@@ -26,7 +26,7 @@ func (r *Robot) Move() error {
 	if err := r.checkOnTable(); err != nil {
 		return err
 	}
-	xPos, yPos, err := move(r.xPos, r.yPos, r.facing)
+	xPos, yPos, err := moveRobot(r.xPos, r.yPos, r.facing)
 	r.xPos, r.yPos = xPos, yPos
 	return err
 }

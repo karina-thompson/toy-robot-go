@@ -13,9 +13,9 @@ func TestPlace(t *testing.T) {
 		err        error
 	}{
 		{0, 0, "north", nil},
-		{7, 3, "west", ErrInvalidPosition},
+		{7, 3, "west", errInvalidPosition},
 		{4, 3, "east", nil},
-		{1, 3, "south", ErrInvalidPosition},
+		{1, 3, "south", errInvalidPosition},
 	}
 	for _, testCase := range testData {
 		r := Robot{}
