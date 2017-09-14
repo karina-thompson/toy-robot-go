@@ -3,8 +3,8 @@ package simulator
 import "container/ring"
 
 const (
-	Left  = "left"
-	Right = "right"
+	left  = "left"
+	right = "right"
 	north = "north"
 	east  = "east"
 	south = "south"
@@ -36,10 +36,10 @@ func turn(facing, direction string) string {
 	compass := compass()
 	for i := 0; i < compass.Len(); i++ {
 		if compass.Value == facing {
-			if direction == Right {
+			if direction == right {
 				result = compass.Next()
 			}
-			if direction == Left {
+			if direction == left {
 				result = compass.Prev()
 			}
 		}

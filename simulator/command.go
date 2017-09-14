@@ -2,7 +2,6 @@ package simulator
 
 import (
 	"errors"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -13,8 +12,10 @@ const (
 	move   = "move"
 )
 
+var errInvalidCommand = errors.New("Invalid command, please try again")
+
+// ProcessCommand executes a command if it is valid
 func ProcessCommand(r *Robot, command string) error {
-	errInvalidCommand := errors.New("Invalid command, please try again")
 	command = strings.TrimSpace(strings.ToLower(command))
 	switch {
 	case validPlaceCommand(strings.Split(command, " ")):
@@ -25,22 +26,13 @@ func ProcessCommand(r *Robot, command string) error {
 		return r.Place(xPos, yPos, direction)
 	case command == report:
 		return r.Report()
-	case command == Left || command == Right:
+	case command == left || command == right:
 		return r.Turn(command)
 	case command == move:
 		return r.Move()
 	default:
 		return errInvalidCommand
 	}
-}
-
-func getCliCommand() string {
-	var command, position string
-	fmt.Scanln(&command, &position)
-	if position == "" {
-		return command
-	}
-	return fmt.Sprintf("%v %v", command, position)
 }
 
 func validPlaceCommand(command []string) bool {
