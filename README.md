@@ -58,3 +58,14 @@ MOVE
 REPORT
 Output: 3,3,NORTH
 ```
+
+### How to run:
+
+- Clone the repo
+- To use CLI, run the `toy-robot-go` binary or `go run main.go()`
+- To use an input file, run `go run main.go() path_to_file`. A sample `input.txt` file is included.
+
+### Run Tests:
+
+- `go test ./... -v`
+- For coverage, add `-cover` flag
