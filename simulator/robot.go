@@ -1,6 +1,9 @@
 package simulator
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Robot struct {
 	xPos, yPos int
@@ -20,7 +23,7 @@ func (r *Robot) Place(xPos, yPos int, direction string) error {
 // Report prints the Robot's current position to stdout
 func (r Robot) Report() error {
 	err := r.checkOnTable()
-	fmt.Println(r.xPos, r.yPos, r.facing)
+	fmt.Println(r.xPos, r.yPos, strings.ToUpper(r.facing))
 	return err
 }
 
