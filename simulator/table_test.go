@@ -8,16 +8,17 @@ import (
 
 func TestInvalidPosition(t *testing.T) {
 	testCases := []struct {
+		name       string
 		xPos, yPos int
 		result     bool
 	}{
-		{0, 0, false},
-		{3, 4, false},
-		{-1, 0, true},
-		{2, 7, true},
+		{"Valid position", 0, 0, false},
+		{"Valid position", 3, 4, false},
+		{"Invalid position", -1, 0, true},
+		{"Invalid position", 2, 7, true},
 	}
 	for _, testCase := range testCases {
 		result := invalidPosition(testCase.xPos, testCase.yPos)
-		assert.Equal(t, result, testCase.result)
+		assert.Equal(t, result, testCase.result, testCase.name)
 	}
 }
